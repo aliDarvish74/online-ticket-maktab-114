@@ -29,5 +29,7 @@
         /// The user name of user
         /// </summary>
         public string Username { get; set; } = string.Empty;
+
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }
