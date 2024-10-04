@@ -4,7 +4,7 @@ using Model;
 
 namespace Infrastructure
 {
-    internal class BaseEntityTypeConfiguration<T, KeyTypeId> : IEntityTypeConfiguration<T> where T : BaseEntity<KeyTypeId> where KeyTypeId : struct
+    internal abstract class BaseEntityTypeConfiguration<T, KeyTypeId> : IEntityTypeConfiguration<T> where T : BaseEntity<KeyTypeId> where KeyTypeId : struct
     {
         protected bool GeneratedValueForKey { get; set; } = true;
         protected bool UseForTraceable { get; set; } = false;
