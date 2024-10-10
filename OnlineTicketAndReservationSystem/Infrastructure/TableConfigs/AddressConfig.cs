@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Model.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.TableConfigs
 {
@@ -14,7 +9,6 @@ namespace Infrastructure.TableConfigs
     {
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
-
             base.RequireTraceable = true;
             base.UseForTraceable = true;
             base.GeneratedValueForKey = true;

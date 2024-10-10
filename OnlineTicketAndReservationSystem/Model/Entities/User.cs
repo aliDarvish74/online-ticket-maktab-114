@@ -1,9 +1,11 @@
-﻿namespace Model.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Model.Entities
 {
     /// <summary>
     /// The User Entity
     /// </summary>
-    public class User : BaseEntity<Guid>
+    public class User : IdentityUser<Guid>
     {
         /// <summary>
         /// The first name of user
@@ -14,21 +16,22 @@
         /// </summary>
         public string LastName { get; set; } = string.Empty;
         /// <summary>
-        /// The email of user
-        /// </summary>
-        public string Email { get; set; } = string.Empty;
-        /// <summary>
-        /// The password of user
-        /// </summary>
-        public string Password { get; set; } = string.Empty;
-        /// <summary>
         /// The time of DOB of user
         /// </summary>
         public DateTime? DateOfBirth { get; set; }
+        public DateTime CreatedDateTime { get; set; }
         /// <summary>
-        /// The user name of user
+        /// The date time of data has updated in system
         /// </summary>
-        public string Username { get; set; } = string.Empty;
+        public DateTime UpdatedDataTime { get; set; }
+        /// <summary>
+        /// The id of user where created data in system
+        /// </summary>
+        public Guid? CreatedUserId { get; set; }
+        /// <summary>
+        /// The id of user where updated data in system
+        /// </summary>
+        public Guid? UpdatedUserId { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }

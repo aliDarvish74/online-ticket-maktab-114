@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Model.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.RepositoryPattern.Classes
 {
-    internal class RoleRepository
-    {
-        private readonly IBaseRepository<Role, Guid> _roleRepo;
+    //internal class RoleRepository
+    //{
+    //    private readonly RoleManager<Role> _roleManager;
 
-        public RoleRepository(IBaseRepository<Role, Guid> roleRepo)
-        {
-            _roleRepo = roleRepo;
-        }
+    //    public RoleRepository(RoleManager<Role> roleManager)
+    //    {
+    //        _roleManager = roleManager;
+    //    }
 
-        public void Test()
-        {
-            var ttt = _roleRepo.GetAllAsync(x => x, null, x => x.Include(x => x.CreatedUser).ThenInclude(u => u.UpdatedUser));
-        }
-    }
+    //    public void Test()
+    //    {
+    //        //var ttt = _roleManager.
+    //    }
+    //}
 }

@@ -1,15 +1,18 @@
 using Infrastructure;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<DbContext, OnlineTicketReservationDbContext>();
 
-var app = builder.Build();
+TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
+MapsterConfig.RegisterMapping();
 
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

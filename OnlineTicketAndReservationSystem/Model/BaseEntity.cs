@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public class BaseEntity<T> where T : struct
+    public abstract class BaseEntity<T> where T : struct
     {
         /// <summary>
         /// The type of Id field in each table has created in system

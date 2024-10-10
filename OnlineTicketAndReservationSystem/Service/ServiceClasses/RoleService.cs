@@ -1,5 +1,6 @@
 ﻿using DataTransferObject.DTOClasses;
-using Infrastructure.RepositoryPattern;
+using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Model.Entities;
 using Service.ServiceInterfaces;
 
@@ -7,16 +8,27 @@ namespace Service.ServiceClasses
 {
     public class RoleService : IRoleService
     {
-        public IBaseRepository<Role, Guid> RepositoryOfEntity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private readonly RoleManager<Role> _roleManager;
+        public RoleService(RoleManager<Role> roleManager)
+        {
+            _roleManager = roleManager;
+        }
+
+        public async Task<RoleDTO> CreateRole(RoleDTO roleDTO)
+        {
+            var data = TranslateToEntity(roleDTO);
+            await _roleManager.CreateAsync(data);
+            return roleDTO;
+        }
 
         public RoleDTO TranslateToDTO(Role entity)
         {
-            throw new NotImplementedException();
+            return entity.Adapt<RoleDTO>();
         }
 
-        public Role TranslateToEntity(RoleDTO model)
+        public Role TranslateToEntity(RoleDTO dto)
         {
-            throw new NotImplementedException();
+            return dto.Adapt<Role>();
         }
     }
 }

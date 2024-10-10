@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Model.Entities;
 using System.Reflection;
 
 namespace Infrastructure
 {
-    public class OnlineTicketReservationDbContext : DbContext
+    public class OnlineTicketReservationDbContext : IdentityDbContext<User, Role, Guid>
     {
         public OnlineTicketReservationDbContext() { }
         public OnlineTicketReservationDbContext(DbContextOptions<OnlineTicketReservationDbContext> dbContext) : base(dbContext) { }
@@ -19,7 +20,7 @@ namespace Infrastructure
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=OnlineTicket2;TrustServerCertificate=True;Integrated Security=SSPI");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=OnlineTicket;TrustServerCertificate=True;Integrated Security=SSPI");
             }
         }
 
