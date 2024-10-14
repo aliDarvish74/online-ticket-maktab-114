@@ -16,7 +16,7 @@ namespace Service.ServiceClasses
 
         public async Task<RoleDTO> CreateRole(RoleDTO roleDTO)
         {
-            var data = TranslateToEntity(roleDTO);
+            Role data = TranslateToEntity(roleDTO);
             await _roleManager.CreateAsync(data);
             return roleDTO;
         }

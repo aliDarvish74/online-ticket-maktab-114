@@ -32,6 +32,8 @@ namespace Model.Entities
         /// The id of user where updated data in system
         /// </summary>
         public Guid? UpdatedUserId { get; set; }
+        public virtual User CreateUser { get; set; }
+        public virtual User UpdateUser { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }

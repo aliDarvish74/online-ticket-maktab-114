@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTicketAndReservationSystem.Models;
 using Service.ServiceInterfaces;
@@ -8,18 +9,19 @@ namespace OnlineTicketAndReservationSystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRoleService _roleService;
+        private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, IRoleService roleService)
+        public HomeController(ILogger<HomeController> logger, IUserService userService)
         {
             _logger = logger;
-            _roleService = roleService;
+            _userService = userService;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            _roleService.CreateRole(new DataTransferObject.DTOClasses.RoleDTO());
-            return View();
+            var users = await _userService.GetAllUsers();
+            return View(users);
         }
 
         public IActionResult Privacy()
