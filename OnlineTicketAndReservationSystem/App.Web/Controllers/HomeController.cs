@@ -17,13 +17,14 @@ namespace OnlineTicketAndReservationSystem.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllUsers();
             return View(users);
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

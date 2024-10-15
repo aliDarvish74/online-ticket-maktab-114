@@ -24,7 +24,7 @@ builder.Services.AddDbContext<DbContext, OnlineTicketReservationDbContext>();
 builder.Services.AddScoped<ClaimsPrincipal>();
 builder.Services.ConfigureApplicationCookie(option =>
 {
-    option.LoginPath = "/Account/Login";
+    option.LoginPath = "/Identity/Account/Login";
 });
 
 builder.Services.AddScoped<IRoleService, RoleService>();

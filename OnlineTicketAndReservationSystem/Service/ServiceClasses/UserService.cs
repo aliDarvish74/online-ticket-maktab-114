@@ -21,21 +21,21 @@ namespace Service.ServiceClasses
 
         public async Task<UserDTO> CreateUser(UserDTO user)
         {
-            var data = TranslateToEntity(user);
+            User data = TranslateToEntity(user);
             await _userManager.CreateAsync(data);
             return user;
         }
 
         public async Task<List<UserDTO>> GetAllUsers()
         {
-            var datas = await _userManager.Users.ToListAsync();
-            var users = datas.Any() ? datas.Select(TranslateToDTO).ToList() : new List<UserDTO>();
+            List<User> datas = await _userManager.Users.ToListAsync();
+            List<UserDTO> users = datas.Any() ? datas.Select(TranslateToDTO).ToList() : new List<UserDTO>();
             return users;
         }
 
         public async Task<UserDTO> GetAsync(Guid id)
         {
-            var data = await _userManager.FindByIdAsync(id.ToString());
+            User? data = await _userManager.FindByIdAsync(id.ToString());
             return TranslateToDTO(data);
         }
 
@@ -46,7 +46,7 @@ namespace Service.ServiceClasses
 
         public async Task<SignInResult> LoginToSystem(string username, string password)
         {
-            var data = await _signInManager.PasswordSignInAsync(username, password, true, lockoutOnFailure: false);
+            SignInResult data = await _signInManager.PasswordSignInAsync(username, password, true, lockoutOnFailure: false);
             return data;
         }
         public UserDTO TranslateToDTO(User entity) => entity.Adapt<UserDTO>();
