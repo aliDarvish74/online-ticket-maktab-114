@@ -14,14 +14,14 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Login.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Login.Username" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Login.Username" class="text-danger"></span>
+                    <input asp-for="Login.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Login.Username" class="form-label">Email</label>
+                    <span asp-validation-for="Login.Username" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Login.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Login.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Login.Password" class="text-danger"></span>
+                    <input asp-for="Login.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Login.Password" class="form-label">Password</label>
+                    <span asp-validation-for="Login.Password" class="text-danger"></span>
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>

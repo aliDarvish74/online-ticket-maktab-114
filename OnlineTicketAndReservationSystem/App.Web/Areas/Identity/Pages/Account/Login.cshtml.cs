@@ -27,8 +27,8 @@ namespace App.Web.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [BindProperty]
-        public InputModel Input { get; set; }
+        //[BindProperty]
+        //public InputModel Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -53,10 +53,11 @@ namespace App.Web.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
-        {
-            public LoginDTO Login { get; set; }
-        }
+        //public class InputModel
+        //{
+        [BindProperty]
+        public LoginDTO Login { get; set; }
+        //}
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -84,7 +85,7 @@ namespace App.Web.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
-                var result = await _userService.LoginToSystem(Input.Login.Username, Input.Login.Password);
+                var result = await _userService.LoginToSystem(Login.Username, Login.Password);
 
                 if (result.Succeeded)
                 {

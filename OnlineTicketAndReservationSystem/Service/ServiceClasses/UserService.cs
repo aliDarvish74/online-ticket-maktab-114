@@ -19,11 +19,10 @@ namespace Service.ServiceClasses
             _signInManager = signInManager;
         }
 
-        public async Task<UserDTO> CreateUser(UserDTO user)
+        public async Task<IdentityResult> CreateUser(UserDTO user)
         {
             User data = TranslateToEntity(user);
-            await _userManager.CreateAsync(data);
-            return user;
+            return await _userManager.CreateAsync(data);
         }
 
         public async Task<List<UserDTO>> GetAllUsers()
