@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace OnlineTicketAndReservationSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,14 +18,13 @@ namespace OnlineTicketAndReservationSystem.Controllers
             _userService = userService;
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllUsers();
             return View(users);
         }
 
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();
@@ -34,6 +34,11 @@ namespace OnlineTicketAndReservationSystem.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult DashboardIndex()
+        {
+            return View();
         }
     }
 }
