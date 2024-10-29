@@ -138,6 +138,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -154,6 +155,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UpdatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -180,6 +182,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -194,6 +197,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UpdatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -205,63 +209,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UpdatedUserId");
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4039b0a8-7a2f-4be1-9a53-1c846ab9be58"),
-                            CityStatusId = 0,
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6216),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "تهران",
-                            ProvinceId = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6234),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("831a8b53-6870-4e52-ae2e-9f5634aaad54"),
-                            CityStatusId = 0,
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6274),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "کرج",
-                            ProvinceId = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6276),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("4a1c90dd-7870-45e1-8998-310c5ee018d9"),
-                            CityStatusId = 0,
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6285),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "دماوند",
-                            ProvinceId = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6287),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("238055ba-31fa-4b43-94d4-f5ca3d9234e2"),
-                            CityStatusId = 0,
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6294),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "سعادتشهر",
-                            ProvinceId = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6295),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("b28d6216-aebb-4b51-99d9-a0dc7266b322"),
-                            CityStatusId = 0,
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6302),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "پرند",
-                            ProvinceId = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(6303),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        });
                 });
 
             modelBuilder.Entity("Model.Entities.Province", b =>
@@ -274,6 +221,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -285,6 +233,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UpdatedUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -294,17 +243,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UpdatedUserId");
 
                     b.ToTable("Provinces");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("84c3d84b-b54f-4e03-8fc6-5130cd643c47"),
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(9658),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            Name = "تهران",
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 87, DateTimeKind.Local).AddTicks(9665),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        });
                 });
 
             modelBuilder.Entity("Model.Entities.Role", b =>
@@ -361,7 +299,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("BuyDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(3880));
+                        .HasDefaultValue(new DateTime(2024, 10, 29, 19, 29, 46, 143, DateTimeKind.Local).AddTicks(7276));
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
@@ -397,56 +335,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2c3ba574-16e7-4272-a43a-d4db6df07a1a"),
-                            BuyDate = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4882),
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4888),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            SeatNumber = 0,
-                            TicketNumber = "41766",
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4889),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            UserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("fde8ab32-b718-4669-a7ad-1a7e84130bfc"),
-                            BuyDate = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4924),
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4925),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            SeatNumber = 0,
-                            TicketNumber = "93117",
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4926),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            UserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("86d8cb35-1dba-431c-90a1-46b60c5e0c0c"),
-                            BuyDate = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4946),
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4948),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            SeatNumber = 0,
-                            TicketNumber = "76665",
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4949),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            UserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        },
-                        new
-                        {
-                            Id = new Guid("d7ffd2f6-62eb-496a-875f-6fad16b0d1a8"),
-                            BuyDate = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4961),
-                            CreatedDateTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4962),
-                            CreatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            SeatNumber = 0,
-                            TicketNumber = "62691",
-                            UpdatedDataTime = new DateTime(2024, 10, 11, 10, 43, 30, 90, DateTimeKind.Local).AddTicks(4963),
-                            UpdatedUserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50"),
-                            UserId = new Guid("efe3a5f8-2198-4e31-899e-a3cd19e96d50")
-                        });
                 });
 
             modelBuilder.Entity("Model.Entities.User", b =>
@@ -609,11 +497,15 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Model.Entities.User", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Model.Entities.User", "UpdatedUser")
                         .WithMany()
-                        .HasForeignKey("UpdatedUserId");
+                        .HasForeignKey("UpdatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("City");
 
@@ -626,7 +518,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Model.Entities.User", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Model.Entities.Province", "Province")
                         .WithMany("Cities")
@@ -636,7 +530,9 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Model.Entities.User", "UpdatedUser")
                         .WithMany()
-                        .HasForeignKey("UpdatedUserId");
+                        .HasForeignKey("UpdatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("CreatedUser");
 
@@ -649,11 +545,15 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Model.Entities.User", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Model.Entities.User", "UpdatedUser")
                         .WithMany()
-                        .HasForeignKey("UpdatedUserId");
+                        .HasForeignKey("UpdatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("CreatedUser");
 

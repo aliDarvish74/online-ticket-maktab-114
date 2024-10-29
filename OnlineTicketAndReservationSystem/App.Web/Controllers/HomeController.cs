@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace OnlineTicketAndReservationSystem.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,7 +18,6 @@ namespace OnlineTicketAndReservationSystem.Controllers
             _userService = userService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllUsers();

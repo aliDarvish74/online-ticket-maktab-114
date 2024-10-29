@@ -9,13 +9,15 @@ namespace Infrastructure.TableConfigs
     {
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
-            base.RequireTraceable = true;
-            base.UseForTraceable = true;
-            base.GeneratedValueForKey = true;
+            RequireTraceable = true;
+            UseForTraceable = true;
+            GeneratedValueForKey = true;
+            base.Configure(builder);
 
             builder.HasOne(x => x.City).WithMany(x => x.Addresses).HasForeignKey(x => x.CityId).IsRequired();
             builder.Property(x => x.Description).IsRequired().HasMaxLength(250);
             builder.Property(x => x.PostalCode).HasColumnType(SqlDbType.VarChar.ToString()).HasMaxLength(10);
+
         }
     }
 }
