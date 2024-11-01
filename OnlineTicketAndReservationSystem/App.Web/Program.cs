@@ -1,4 +1,5 @@
 using Infrastructure;
+using Infrastructure.RepositoryPattern;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,10 @@ builder.Services.ConfigureApplicationCookie(option =>
     option.LoginPath = "/Identity/Account/Login";
 });
 
+builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProvinceService, ProvinceService>();
 
 builder.Services.AddAuthentication();
 

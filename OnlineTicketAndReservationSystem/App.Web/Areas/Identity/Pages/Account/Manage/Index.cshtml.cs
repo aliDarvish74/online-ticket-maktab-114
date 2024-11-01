@@ -75,7 +75,7 @@ namespace App.Web.Areas.Identity.Pages.Account.Manage
             };
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);

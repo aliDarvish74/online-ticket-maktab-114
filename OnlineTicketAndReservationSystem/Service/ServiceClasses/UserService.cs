@@ -1,6 +1,7 @@
 ﻿using DataTransferObject.DTOClasses;
 using Mapster;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Model.Entities;
@@ -22,7 +23,7 @@ namespace Service.ServiceClasses
         public async Task<IdentityResult> CreateUser(UserDTO user)
         {
             User data = TranslateToEntity(user);
-            return await _userManager.CreateAsync(data);
+            return await _userManager.CreateAsync(data, user.Password);
         }
 
         public async Task<List<UserDTO>> GetAllUsers()
@@ -36,6 +37,12 @@ namespace Service.ServiceClasses
         {
             User? data = await _userManager.FindByIdAsync(id.ToString());
             return TranslateToDTO(data);
+        }
+
+        public async Task<UserDTO> GetCurrentUser(HttpContext context)
+        {
+            var user = await _userManager.GetUserAsync(context.User);
+            return TranslateToDTO(user);
         }
 
         public async Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync()

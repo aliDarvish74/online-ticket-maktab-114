@@ -1,8 +1,8 @@
 ﻿using DataTransferObject.DTOClasses;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Model.Entities;
-
 
 namespace Service.ServiceInterfaces
 {
@@ -13,5 +13,6 @@ namespace Service.ServiceInterfaces
         Task<List<UserDTO>> GetAllUsers();
         Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
         Task<SignInResult> LoginToSystem(string username, string password);
+        Task<UserDTO> GetCurrentUser(HttpContext context);
     }
 }
