@@ -19,6 +19,9 @@ namespace Model.Entities
         /// The time of DOB of user
         /// </summary>
         public DateTime? DateOfBirth { get; set; }
+
+        public int? AvatarId { get; set; }
+
         public DateTime CreatedDateTime { get; set; }
         /// <summary>
         /// The date time of data has updated in system
@@ -32,8 +35,12 @@ namespace Model.Entities
         /// The id of user where updated data in system
         /// </summary>
         public Guid? UpdatedUserId { get; set; }
+
         public virtual User CreateUser { get; set; }
+
         public virtual User UpdateUser { get; set; }
+
+        public virtual Blob? Avatar { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }

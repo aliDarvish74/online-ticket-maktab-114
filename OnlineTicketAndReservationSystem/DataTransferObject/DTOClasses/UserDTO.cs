@@ -33,5 +33,6 @@ namespace DataTransferObject.DTOClasses
         [Compare("Password", ErrorMessage = "کلمه عبور و تکرار آن باید یکی باشند")]
         public string ConfirmPassword { get; set; }
 
+        public BlobDTO? Avatar { get; set; }
     }
 }

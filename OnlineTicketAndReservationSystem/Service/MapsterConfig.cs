@@ -24,6 +24,24 @@ namespace Service
                 .Map(x => x.PhoneNumber, y => y.MobileNumber)
                 .Map(x => x.UserName, y => y.EmailAddress)
                 .Map(x => x.PasswordHash, y => y.Password);
+
+            TypeAdapterConfig<Blob, BlobDTO>.NewConfig()
+                .Map(x => x.FileAddress, y => y.FileAddress)
+                .Map(x => x.FileSize, y => y.FileSize)
+                .Map(x => x.MimeType, y => y.MimeType);
+
+            TypeAdapterConfig<BlobDTO, Blob>.NewConfig()
+                .Map(x => x.FileAddress, y => y.FileAddress)
+                .Map(x => x.FileSize, y => y.FileSize)
+                .Map(x => x.MimeType, y => y.MimeType);
+
+            TypeAdapterConfig<Province, ProvinceDTO>.NewConfig()
+                .Map(x => x.Name, y => y.Name)
+                .Map(x => x.Picture, y => y.ProvincePicture);
+
+            TypeAdapterConfig<ProvinceDTO, Province>.NewConfig()
+                .Map(x => x.Name, y => y.Name)
+                .Map(x => x.ProvincePicture, y => y.Picture);
         }
     }
 }

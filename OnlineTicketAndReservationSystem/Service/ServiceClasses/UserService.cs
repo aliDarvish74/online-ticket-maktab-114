@@ -13,11 +13,13 @@ namespace Service.ServiceClasses
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IBlobService _blobService;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IBlobService blobService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _blobService = blobService;
         }
 
         public async Task<IdentityResult> CreateUser(UserDTO user)
@@ -55,8 +57,18 @@ namespace Service.ServiceClasses
             SignInResult data = await _signInManager.PasswordSignInAsync(username, password, true, lockoutOnFailure: false);
             return data;
         }
-        public UserDTO TranslateToDTO(User entity) => entity.Adapt<UserDTO>();
+        public UserDTO TranslateToDTO(User entity)
+        {
+            var user = entity.Adapt<UserDTO>();
+            //user.Avatar = user.Avatar != null ? _blobService.TranslateToDTO(entity.Avatar) : null;
+            return user;
+        }
 
-        public User TranslateToEntity(UserDTO dto) => dto.Adapt<User>();
+        public User TranslateToEntity(UserDTO dto)
+        {
+            var user = dto.Adapt<User>();
+            //user.Avatar = user.Avatar != null ? _blobService.TranslateToEntity(dto.Avatar) : null;
+            return user;
+        }
     }
 }

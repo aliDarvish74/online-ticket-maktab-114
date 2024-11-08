@@ -1,9 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
+﻿#nullable disable
 using DataTransferObject.DTOClasses;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,15 +18,8 @@ namespace App.Web.Areas.Identity.Pages.Account
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        //private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
-            UserManager<User> userManager,
-            IUserStore<User> userStore,
-            SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger,
-            IUserService userService
-            /*,IEmailSender emailSender*/)
+        public RegisterModel(UserManager<User> userManager, IUserStore<User> userStore, SignInManager<User> signInManager, ILogger<RegisterModel> logger, IUserService userService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -38,7 +27,6 @@ namespace App.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _userService = userService;
-            //_emailSender = emailSender;
         }
 
         /// <summary>
@@ -46,7 +34,7 @@ namespace App.Web.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
-        public UserDTO Input { get; set; }
+        public RegisterViewModel Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -54,49 +42,35 @@ namespace App.Web.Areas.Identity.Pages.Account
         /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            //ExternalLogins = await _userService.GetExternalAuthenticationSchemesAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            //ExternalLogins = await _userService.GetExternalAuthenticationSchemesAsync();
 
             if (ModelState.IsValid)
             {
-                //var user = CreateUser();
+                var rootFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploads");
+                var address = Path.Combine(rootFolder, Input.File.FileName);
 
-                //await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userService.CreateUser(Input);
+                Input.User.Avatar = new BlobDTO() { FileAddress = address, FileSize = (int)(Input.File.Length / 1000), MimeType = Input.File.ContentType };
+
+                var result = await _userService.CreateUser(Input.User);
                 if (result.Succeeded)
                 {
+                    Input.File.CopyTo(new FileStream(address, FileMode.Create));
                     _logger.LogInformation("User created a new account with password.");
 
-                    var user = await _userManager.FindByEmailAsync(Input.EmailAddress);
+                    var user = await _userManager.FindByEmailAsync(Input.User.EmailAddress);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.EmailAddress, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.User.EmailAddress, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -114,20 +88,6 @@ namespace App.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private User CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<User>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
-        }
-
         private IUserEmailStore<User> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
@@ -136,5 +96,11 @@ namespace App.Web.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<User>)_userStore;
         }
+    }
+
+    public class RegisterViewModel
+    {
+        public UserDTO User { get; set; }
+        public IFormFile File { get; set; }
     }
 }

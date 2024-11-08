@@ -11,8 +11,9 @@ namespace Infrastructure.TableConfigs
             UseForTraceable = true;
             GeneratedValueForKey = true;
             base.Configure(builder);
-            
+
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
+            builder.HasOne(x => x.ProvincePicture).WithMany().HasForeignKey(x => x.ProvincePictureId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
         }
     }
 }

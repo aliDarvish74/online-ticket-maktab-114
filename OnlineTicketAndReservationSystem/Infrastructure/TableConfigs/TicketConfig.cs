@@ -9,6 +9,7 @@ namespace Infrastructure.TableConfigs
     {
         public override void Configure(EntityTypeBuilder<Ticket> builder)
         {
+            builder.ToTable(nameof(Ticket));
             RequireTraceable = true;
             UseForTraceable = true;
             GeneratedValueForKey = true;
@@ -16,9 +17,8 @@ namespace Infrastructure.TableConfigs
 
             builder.HasOne(x => x.User).WithMany(x => x.Tickets).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.Property(x => x.UserId).IsRequired();
-            builder.Property(x => x.BuyDate).IsRequired().HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.BuyDate).IsRequired();
             builder.Property(x => x.TicketNumber).HasColumnType(SqlDbType.VarChar.ToString()).IsRequired().HasMaxLength(5);
-
         }
     }
 }

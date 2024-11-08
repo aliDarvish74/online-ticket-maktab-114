@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OnlineTicketReservationDbContext))]
-    partial class OnlineTicketReservationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241107175908_Create_Blob_Table")]
+    partial class Create_Blob_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,9 +258,6 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ProvincePictureId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDataTime")
                         .HasColumnType("datetime2");
 
@@ -268,8 +268,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("ProvincePictureId");
 
                     b.HasIndex("UpdatedUserId");
 
@@ -328,7 +326,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("BuyDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 11, 7, 21, 29, 6, 586, DateTimeKind.Local).AddTicks(6215));
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
@@ -363,7 +363,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Ticket", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Model.Entities.User", b =>
@@ -583,11 +583,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Entities.Blob", "ProvincePicture")
-                        .WithMany()
-                        .HasForeignKey("ProvincePictureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Model.Entities.User", "UpdatedUser")
                         .WithMany()
                         .HasForeignKey("UpdatedUserId")
@@ -595,8 +590,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("CreatedUser");
-
-                    b.Navigation("ProvincePicture");
 
                     b.Navigation("UpdatedUser");
                 });

@@ -46,7 +46,7 @@ namespace OnlineTicketAndReservationSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> InsertProvince([FromBody] ProvinceDTO province)
+        public async Task<IActionResult> InsertProvince([FromForm] ProvinceDTO province)
         {
             if (ModelState.IsValid)
             {
