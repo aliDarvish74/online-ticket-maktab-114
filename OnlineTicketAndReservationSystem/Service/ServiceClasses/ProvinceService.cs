@@ -1,4 +1,5 @@
 ﻿using DataTransferObject.DTOClasses;
+using Infrastructure.Migrations;
 using Infrastructure.RepositoryPattern;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,10 @@ namespace Service.ServiceClasses
 
         public async Task<ProvinceDTO> CreateProvince(ProvinceDTO provinceDTO)
         {
+            var rootFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploads");
+            var address = Path.Combine(rootFolder, $"{provinceDTO.Name}-{provinceDTO.ProvinceFile.FileName}");
+            provinceDTO.Picture = new BlobDTO() { FileAddress = address, FileSize = (int)(provinceDTO.ProvinceFile.Length / 1000), MimeType = provinceDTO.ProvinceFile.ContentType };
+
             var province = TranslateToEntity(provinceDTO);
             province.CreatedDateTime = DateTime.Now;
             province.UpdatedDataTime = DateTime.Now;
@@ -29,6 +34,8 @@ namespace Service.ServiceClasses
             province.UpdatedUserId = user.Id;
 
             var result = await _provinceRepository.CreateDataAsync(province);
+            provinceDTO.ProvinceFile.CopyTo(new FileStream(address, FileMode.Create));
+
             return provinceDTO;
         }
 

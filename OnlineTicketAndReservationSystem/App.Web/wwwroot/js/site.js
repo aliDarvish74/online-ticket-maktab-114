@@ -6,14 +6,21 @@
 
 function createProvinceWithAjax(e) {
     let provinceName = $("#provinceName").val();
-    let data = { name: provinceName };
+    let provincePic = $("#provinceFile");
+
+    var form = new FormData();
+    let data = { name: provinceName, provinceFile: provincePic[0].files[0] };
+    form.append('name', data.name);
+    form.append('ProvinceFile', data.provinceFile);
+
     if (e.keyCode == 13 || e.type == "click") {
         e.preventDefault();
         $.ajax({
             type: 'Post',
             url: '/Home/InsertProvince',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
+            data: form,
+            contentType: false, // Necessary for file uploads
+            processData: false, // Prevents jQuery from converting data into a query string
             success: function (response) {
                 if (response) {
                     if (response.name) {
