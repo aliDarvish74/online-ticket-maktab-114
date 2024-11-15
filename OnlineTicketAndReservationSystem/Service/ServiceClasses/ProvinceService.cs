@@ -1,10 +1,10 @@
 ﻿using DataTransferObject.DTOClasses;
-using Infrastructure.Migrations;
 using Infrastructure.RepositoryPattern;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Model.Entities;
 using Service.ServiceInterfaces;
+using Shared;
 
 namespace Service.ServiceClasses
 {
@@ -39,6 +39,11 @@ namespace Service.ServiceClasses
             return provinceDTO;
         }
 
+        public async Task<IQueryable<Province>> GetAllProvinceAsQueryable()
+        {
+            return await _provinceRepository.GetAllAsync();
+        }
+
         public async Task<List<ProvinceDTO>> GetAllProvinceList()
         {
             var provinces = await _provinceRepository.GetAllAsync();
@@ -49,6 +54,13 @@ namespace Service.ServiceClasses
         {
             var data = await _provinceRepository.GetByIdAsync(id);
             return TranslateToDTO(data);
+        }
+
+        public async Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex)
+        {
+            var provinces = await _provinceRepository.GetAllAsync();
+            var data = PaginatedList<Province>.Create(provinces, pageindex, pagesize);
+            return new PaginatedList<ProvinceDTO>(data.Select(TranslateToDTO).ToList(), provinces.Count(), pageindex, pagesize);
         }
 
         public ProvinceDTO TranslateToDTO(Province entity) => entity.Adapt<ProvinceDTO>();

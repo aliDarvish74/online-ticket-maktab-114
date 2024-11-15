@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DataTransferObject.DTOClasses.ProvinceDTO>;
+@{
+}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        لیست استان های سیستم
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th>تعداد شهرهای هر استان</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Cities.Count)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

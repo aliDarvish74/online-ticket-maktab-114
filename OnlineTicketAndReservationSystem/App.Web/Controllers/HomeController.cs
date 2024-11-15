@@ -55,5 +55,21 @@ namespace OnlineTicketAndReservationSystem.Controllers
             }
             return View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ListOfProvinces()
+        {
+            var provinces = await _provinceService.GetAllProvinceList();
+            return View(provinces);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ListOfProvincesWithPagination(int? pageindex/*, int? pagesize*/)
+        {
+            var data = await _provinceService.GetProvinceListAsPagination(5, pageindex.HasValue ? pageindex.Value : 1);
+            return View(data);
+        }
     }
 }
