@@ -1,5 +1,5 @@
 ﻿@using Shared
-@model PaginatedList<DataTransferObject.DTOClasses.ProvinceDTO>;
+@model PaginatedList<DataTransferObject.DTOClasses.ProvinceDTO>
 @{
 }
 <div class="card mb-4">
@@ -7,7 +7,7 @@
         <i class="fas fa-table me-1"></i>
         لیست استان های سیستم
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" id="data-container">
         <table class="table">
             <thead>
                 <tr>
@@ -31,7 +31,7 @@
                 @if (Model.HasPreviousPage)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-action="ListOfProvincesWithPagination" asp-route-pageIndex="@(Model.PageIndex - 1)">Previous</a>
+                        <a class="page-link" href="#" onclick="searchProvincesWithPagination(@(Model.PageIndex - 1))">Previous</a>
                     </li>
                 }
                 else
@@ -52,7 +52,7 @@
                     else
                     {
                         <li class="page-item">
-                            <a class="page-link" asp-action="ListOfProvincesWithPagination" asp-route-pageIndex="@i">@i</a>
+                            <a class="page-link" href="#" onclick="searchProvincesWithPagination(@i)">@i</a>
                         </li>
                     }
                 }
@@ -60,8 +60,7 @@
                 @if (Model.HasNextPage)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-action="ListOfProvincesWithPagination" asp-route-pageIndex="@(Model.PageIndex + 1)">Next</a>
-                        @* <a class="page-link" asp-action="ListOfProvincesWithPagination" asp-route-pageIndex="@(Model.PageIndex + 1)" asp-route-pagesize="7">Next</a> *@
+                        <a class="page-link" href="#" onclick="searchProvincesWithPagination(@(Model.PageIndex + 1))">Next</a>
                     </li>
                 }
                 else
@@ -74,3 +73,7 @@
         </nav>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

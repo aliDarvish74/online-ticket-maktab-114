@@ -1,8 +1,31 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    console.log("jQuery is working and document is ready!");
 
-// Write your JavaScript code.
+    $(document).on("click", "#pagination a", function (e) {
+        e.preventDefault();
+        var page = $(this).data("page");
+        console.log("Pagination link clicked. Page:", page);
+        searchProvincesWithPagination(page);
+    });
+});
 
+function searchProvincesWithPagination(pageIndex) {
+    console.log("searchProvincesWithPagination triggered with pageIndex:", pageIndex);
+    $.ajax({
+        type: 'GET',
+        url: '/Home/ListOfProvincesWithPagination',
+        data: { pageIndex: pageIndex },
+        success: function (data) {
+            console.log("AJAX request successful.");
+            var newContent = $(data).find('#data-container').html();
+            $("#data-container").html(newContent);
+        },
+        error: function (error) {
+            console.error("AJAX request failed: ", error);
+            ShowMessage('', 'internal server error', '');
+        }
+    });
+}
 
 function createProvinceWithAjax(e) {
     let provinceName = $("#provinceName").val();
@@ -16,7 +39,7 @@ function createProvinceWithAjax(e) {
     if (e.keyCode == 13 || e.type == "click") {
         e.preventDefault();
         $.ajax({
-            type: 'Post',
+            type: 'POST',
             url: '/Home/InsertProvince',
             data: form,
             contentType: false, // Necessary for file uploads
@@ -25,34 +48,21 @@ function createProvinceWithAjax(e) {
                 if (response) {
                     if (response.name) {
                         ShowMessage('Success', "درج استان با موفقیت انجام شد", 'success');
-                    }
-                    else {
+                    } else {
                         ShowMessage('Error', response.errorMessages[0], 'error');
                     }
-                }
-                else {
+                } else {
                     ShowMessage('Error', 'Internal server error', 'error');
                 }
             },
             error: function (err) {
                 console.log(err);
-                alert('internal server error');
+                alert('Internal server error');
             }
-        })
+        });
     }
 }
 
 function ShowMessage(title, text, theme) {
-    //window.createNotification({
-    //    closeOnClick: true,
-    //    displayCloseButton: false,
-    //    positionClass: 'nfc-top-right',
-    //    showDuration: 3000,
-    //    theme: theme !== '' ? theme : 'success'
-    //})({
-    //    title: title !== '' ? title : 'اعلان',
-    //    message: decodeURI(text)
-    //});
-
     alert(text);
 }

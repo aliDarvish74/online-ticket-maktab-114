@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTicketAndReservationSystem.Models;
 using Service.ServiceInterfaces;
+using Shared;
 using System.Diagnostics;
 
 namespace OnlineTicketAndReservationSystem.Controllers
@@ -66,9 +67,9 @@ namespace OnlineTicketAndReservationSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ListOfProvincesWithPagination(int? pageindex/*, int? pagesize*/)
+        public async Task<IActionResult> ListOfProvincesWithPagination(int? pageindex)
         {
-            var data = await _provinceService.GetProvinceListAsPagination(5, pageindex.HasValue ? pageindex.Value : 1);
+            PaginatedList<ProvinceDTO> data = await _provinceService.GetProvinceListAsPagination(3, pageindex.HasValue ? pageindex.Value : 1);
             return View(data);
         }
     }
