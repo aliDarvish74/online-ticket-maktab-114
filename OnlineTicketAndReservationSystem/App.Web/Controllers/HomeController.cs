@@ -67,9 +67,9 @@ namespace OnlineTicketAndReservationSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ListOfProvincesWithPagination(int? pageindex)
+        public async Task<IActionResult> ListOfProvincesWithPagination(int? pageindex, string searchName)
         {
-            PaginatedList<ProvinceDTO> data = await _provinceService.GetProvinceListAsPagination(3, pageindex.HasValue ? pageindex.Value : 1);
+            PaginatedList<ProvinceDTO> data = await _provinceService.GetProvinceListAsPagination(3, pageindex.HasValue ? pageindex.Value : 1, searchName);
             return View(data);
         }
     }

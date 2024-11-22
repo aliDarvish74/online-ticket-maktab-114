@@ -56,9 +56,15 @@ namespace Service.ServiceClasses
             return TranslateToDTO(data);
         }
 
-        public async Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex)
+        public async Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex, string searchName)
         {
-            var provinces = await _provinceRepository.GetAllAsync();
+            IQueryable<Province> provinces = null;
+
+            if (!string.IsNullOrEmpty(searchName))
+                provinces = await _provinceRepository.GetAllAsync(x => x.Name.Contains(searchName), true);
+            else
+                provinces = await _provinceRepository.GetAllAsync();
+
             var data = PaginatedList<Province>.Create(provinces, pageindex, pagesize);
             return new PaginatedList<ProvinceDTO>(data.Select(TranslateToDTO).ToList(), provinces.Count(), pageindex, pagesize);
         }

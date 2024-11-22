@@ -10,6 +10,6 @@ namespace Service.ServiceInterfaces
         Task<List<ProvinceDTO>> GetAllProvinceList();
         Task<ProvinceDTO> GetProvinceById(Guid id);
         Task<IQueryable<Province>> GetAllProvinceAsQueryable();
-        Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex);
+        Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex, string searchName);
     }
 }

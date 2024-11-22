@@ -11,10 +11,12 @@
 
 function searchProvincesWithPagination(pageIndex) {
     console.log("searchProvincesWithPagination triggered with pageIndex:", pageIndex);
+    let searchValue = $("#searchBox").val();
+
     $.ajax({
         type: 'GET',
         url: '/Home/ListOfProvincesWithPagination',
-        data: { pageIndex: pageIndex },
+        data: { pageIndex: pageIndex, searchName: searchValue },
         success: function (data) {
             console.log("AJAX request successful.");
             var newContent = $(data).find('#data-container').html();
@@ -25,6 +27,11 @@ function searchProvincesWithPagination(pageIndex) {
             ShowMessage('', 'internal server error', '');
         }
     });
+}
+
+function searchReset() {
+    $("#searchBox").val('');
+    searchProvincesWithPagination(1);
 }
 
 function createProvinceWithAjax(e) {
