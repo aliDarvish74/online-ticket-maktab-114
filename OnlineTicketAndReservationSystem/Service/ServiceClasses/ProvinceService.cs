@@ -2,6 +2,7 @@
 using Infrastructure.RepositoryPattern;
 using Mapster;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Model.Entities;
 using Service.ServiceInterfaces;
 using Shared;
@@ -56,16 +57,16 @@ namespace Service.ServiceClasses
             return TranslateToDTO(data);
         }
 
-        public async Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex, string searchName)
+        public async Task<PaginatedList<ProvinceDTO>> GetProvinceListAsPagination(int pagesize, int pageindex, string searchName, int? searchCityCount)
         {
-            IQueryable<Province> provinces = null;
+            IQueryable<Province> provinces = await _provinceRepository.GetAllAsync(x => x, include: x => x.Include(x => x.Cities));
 
             if (!string.IsNullOrEmpty(searchName))
-                provinces = await _provinceRepository.GetAllAsync(x => x.Name.Contains(searchName), true);
-            else
-                provinces = await _provinceRepository.GetAllAsync();
+                provinces = provinces.Where(x => x.Name.Contains(searchName));
+            if (searchCityCount.HasValue)
+                provinces = provinces.Where(x => x.Cities.Count == searchCityCount.Value);
 
-            var data = PaginatedList<Province>.Create(provinces, pageindex, pagesize);
+            PaginatedList<Province> data = PaginatedList<Province>.Create(provinces, pageindex, pagesize);
             return new PaginatedList<ProvinceDTO>(data.Select(TranslateToDTO).ToList(), provinces.Count(), pageindex, pagesize);
         }
 
