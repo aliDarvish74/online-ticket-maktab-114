@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using Service.ServiceInterfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace App.Web.Areas.Identity.Pages.Account
 {
@@ -57,6 +60,8 @@ namespace App.Web.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            _logger.LogError("Test of Write Log into Serilog with Login page this is error log");
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);

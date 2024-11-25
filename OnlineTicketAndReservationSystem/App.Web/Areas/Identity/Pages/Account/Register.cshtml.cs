@@ -1,12 +1,17 @@
 ﻿#nullable disable
 using DataTransferObject.DTOClasses;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
 using Model.Entities;
 using Service.ServiceInterfaces;
+using System;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace App.Web.Areas.Identity.Pages.Account
 {

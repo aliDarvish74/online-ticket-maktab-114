@@ -1,69 +1,40 @@
-using Infrastructure;
-using Infrastructure.RepositoryPattern;
-using Mapster;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Model.Entities;
-using Service;
-using Service.ServiceClasses;
-using Service.ServiceInterfaces;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
-MapsterConfig.RegisterMapping();
-
-builder.Services.AddMvc();
-builder.Services.AddControllers();
-builder.Services.AddRazorPages();
-
-builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<OnlineTicketReservationDbContext>().AddDefaultTokenProviders();
-builder.Services.AddDbContext<DbContext, OnlineTicketReservationDbContext>();
-builder.Services.AddScoped<ClaimsPrincipal>();
-builder.Services.ConfigureApplicationCookie(option =>
+namespace App.Web
 {
-    option.LoginPath = "/Identity/Account/Login";
-});
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Configure Serilog
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341") // Replace with your Seq server URL
+                .CreateLogger();
 
-builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IBlobService, BlobService>();
-builder.Services.AddScoped<IProvinceService, ProvinceService>();
+            try
+            {
+                Log.Information("Starting web host");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
 
-builder.Services.AddAuthentication();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).UseSerilog().ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapRazorPages();
-});
-
-app.Run();

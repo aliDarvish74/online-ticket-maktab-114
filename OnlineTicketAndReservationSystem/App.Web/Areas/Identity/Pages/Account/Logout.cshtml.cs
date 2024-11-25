@@ -3,7 +3,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using Model.Entities;
+using System.Threading.Tasks;
 
 namespace App.Web.Areas.Identity.Pages.Account
 {

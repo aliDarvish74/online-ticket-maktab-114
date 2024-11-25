@@ -1,10 +1,12 @@
 using DataTransferObject.DTOClasses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OnlineTicketAndReservationSystem.Models;
 using Service.ServiceInterfaces;
 using Shared;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OnlineTicketAndReservationSystem.Controllers
 {
